@@ -48,6 +48,7 @@ const DataTable: React.FC = () => {
     (state: RootState) => state.table
   );
   
+  // Safety check for editingRows - handle legacy data from localStorage
   const editingRowsArray = Array.isArray(editingRows) ? editingRows : [];
   
   const [editValues, setEditValues] = useState<Record<string, Partial<TableRowType>>>({});
@@ -59,7 +60,9 @@ const DataTable: React.FC = () => {
 
   const visibleColumns = columns.filter(col => col.visible);
 
+  // Memoized filtering and sorting to avoid unnecessary re-renders
   const filteredAndSortedData = useMemo(() => {
+    // Filter data based on search term
     let filtered = data.filter(row =>
       Object.values(row).some(value =>
         value?.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -133,6 +136,7 @@ const DataTable: React.FC = () => {
   };
 
   const handleCellChange = (rowId: string, field: string, value: any) => {
+    // Validate age field - must be numeric
     if (field === 'age') {
       if (value && isNaN(Number(value))) {
         setValidationError('Age must be a number');
@@ -163,7 +167,7 @@ const DataTable: React.FC = () => {
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+      <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2 }}>
         {editingRowsArray.length > 0 && (
           <div style={{ padding: '16px', borderBottom: '1px solid #e0e0e0', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             <Button onClick={handleSaveAll} variant="contained" size="small">
@@ -179,24 +183,24 @@ const DataTable: React.FC = () => {
           <TableHead>
             <TableRow>
               {visibleColumns.map((column) => (
-                <TableCell key={column.id}>
-                  <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                <TableCell key={column.id} sx={{ fontWeight: 600, backgroundColor: 'action.hover' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', whiteSpace: 'nowrap', userSelect: 'none' }}
                        onClick={() => column.sortable && handleSort(column.id)}>
                     {column.label}
                     {column.sortable && sortBy === column.id && (
-                      sortOrder === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />
+                      sortOrder === 'asc' ? <ArrowUpward fontSize="small" sx={{ ml: 0.5 }} /> : <ArrowDownward fontSize="small" sx={{ ml: 0.5 }} />
                     )}
                   </div>
                 </TableCell>
               ))}
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ fontWeight: 600, backgroundColor: 'action.hover' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paginatedData.map((row) => {
               const isEditing = editingRowsArray.includes(row.id);
               return (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} sx={{ '&:hover': { backgroundColor: 'action.hover' }, transition: 'background-color 0.2s' }}>
                   {visibleColumns.map((column) => (
                     <TableCell key={column.id}>
                       {isEditing ? (

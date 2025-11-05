@@ -46,12 +46,12 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Manage Columns</DialogTitle>
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: 2 } }}>
+      <DialogTitle sx={{ fontWeight: 600 }}>⚙️ Manage Columns</DialogTitle>
       <DialogContent>
         <Box sx={{ mb: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Column Visibility
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, color: 'primary.main' }}>
+            👁️ Column Visibility
           </Typography>
           {columns.map((column) => (
             <FormControlLabel
@@ -68,8 +68,8 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({ open, onClose }) => {
         </Box>
         
         <Box>
-          <Typography variant="h6" gutterBottom>
-            Add New Column
+          <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, color: 'primary.main' }}>
+            ➕ Add New Column
           </Typography>
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             <TextField

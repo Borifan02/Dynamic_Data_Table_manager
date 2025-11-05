@@ -62,8 +62,13 @@ const ImportExport: React.FC = () => {
         startIcon={<Upload />}
         onClick={() => fileInputRef.current?.click()}
         size="small"
+        sx={{ 
+          borderRadius: 2,
+          '&:hover': { transform: 'translateY(-2px)', boxShadow: 2 },
+          transition: 'all 0.2s'
+        }}
       >
-        Import CSV
+        📄 Import CSV
       </Button>
       
       <Button
@@ -71,8 +76,13 @@ const ImportExport: React.FC = () => {
         startIcon={<Download />}
         onClick={handleExport}
         size="small"
+        sx={{ 
+          borderRadius: 2,
+          '&:hover': { transform: 'translateY(-2px)', boxShadow: 2 },
+          transition: 'all 0.2s'
+        }}
       >
-        Export CSV
+        💾 Export CSV
       </Button>
 
       <Snackbar

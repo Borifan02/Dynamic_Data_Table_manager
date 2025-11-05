@@ -2,6 +2,11 @@ import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
 import { TableRow, Column } from '@/types';
 
+/**
+ * Parse CSV file and convert to TableRow array
+ * @param file - CSV file to parse
+ * @returns Promise with parsed data
+ */
 export const parseCSV = (file: File): Promise<TableRow[]> => {
   return new Promise((resolve, reject) => {
     Papa.parse(file, {
@@ -28,7 +33,12 @@ export const parseCSV = (file: File): Promise<TableRow[]> => {
   });
 };
 
+/**
+ * Export table data to CSV file
+ * Only exports visible columns
+ */
 export const exportToCSV = (data: TableRow[], columns: Column[], filename: string = 'table-data.csv') => {
+  // Only export visible columns
   const visibleColumns = columns.filter(col => col.visible);
   const headers = visibleColumns.map(col => col.label);
   

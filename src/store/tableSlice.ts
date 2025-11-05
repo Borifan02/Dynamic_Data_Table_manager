@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TableState, TableRow, Column } from '@/types';
 
+// Default columns for the table
 const defaultColumns: Column[] = [
   { id: 'name', label: 'Name', visible: true, sortable: true },
   { id: 'email', label: 'Email', visible: true, sortable: true },
@@ -8,6 +9,7 @@ const defaultColumns: Column[] = [
   { id: 'role', label: 'Role', visible: true, sortable: true },
 ];
 
+// Sample data - TODO: Replace with API call in production
 const initialData: TableRow[] = [
   { id: '1', name: 'bonsan fuad ', email: 'bonsan@example.com', age: 30, role: 'Developer' },
   { id: '2', name: 'Borifan Dabasa', email: 'borifan@example.com', age: 25, role: 'Designer' },
@@ -25,6 +27,7 @@ const initialState: TableState = {
   editingRows: [],
 };
 
+// Redux slice for table state management
 const tableSlice = createSlice({
   name: 'table',
   initialState,
@@ -38,6 +41,7 @@ const tableSlice = createSlice({
     updateRow: (state, action: PayloadAction<{ id: string; data: Partial<TableRow> }>) => {
       const index = state.data.findIndex(row => row.id === action.payload.id);
       if (index !== -1) {
+        // Merge existing row data with updates
         state.data[index] = { ...state.data[index], ...action.payload.data };
       }
     },

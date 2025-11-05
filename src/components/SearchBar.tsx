@@ -14,7 +14,7 @@ const SearchBar: React.FC = () => {
   return (
     <TextField
       fullWidth
-      placeholder="Search all fields..."
+      placeholder="🔍 Search by name, email, age, or role..."
       value={searchTerm}
       onChange={(e) => dispatch(setSearchTerm(e.target.value))}
       InputProps={{
@@ -24,7 +24,14 @@ const SearchBar: React.FC = () => {
           </InputAdornment>
         ),
       }}
-      sx={{ mb: 2 }}
+      sx={{ 
+        mb: 2,
+        '& .MuiOutlinedInput-root': {
+          '&:hover fieldset': {
+            borderColor: 'primary.main',
+          },
+        },
+      }}
     />
   );
 };
