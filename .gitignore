@@ -4,6 +4,9 @@ node_modules/
 # Next.js build output
 .next/
 
+# Static export folder for GitHub Pages
+out/
+
 # Local environment variables
 .env
 .env.local
